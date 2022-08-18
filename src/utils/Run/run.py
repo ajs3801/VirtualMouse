@@ -21,7 +21,7 @@ def ChooseOption(image,point_x,point_y,function_list,block):
   TEXT_COLOR = (255,255,255)
   GAP = 50
   THICKNESS = 3
-
+  
   opt_list = []
   A.FindCoordList(image,opt_list,block,height_ratio,width_ratio)
   D.DrawRectangle(image,COLOR,THICKNESS,opt_list,block)
@@ -29,7 +29,7 @@ def ChooseOption(image,point_x,point_y,function_list,block):
   D.PutText(image,opt_list,function_list,GAP,TEXT_COLOR)
 
 def main(cap,function_list):
-  with mp_hands.Hands(max_num_hands=1,model_complexity=0,min_detection_confidence=0.8,min_tracking_confidence=0.5) as hands:    
+  with mp_hands.Hands(max_num_hands=1,model_complexity=0,min_detection_confidence=0.8,min_tracking_confidence=0.5) as hands:  
     while cap.isOpened():
       ret, frame = cap.read()
       
@@ -52,7 +52,8 @@ def main(cap,function_list):
         if results.multi_hand_landmarks:
           image, point_x, point_y = A.ExtractFinger(image,results,15,(0,255,0))
           ChooseOption(image,point_x,point_y,function_list,len(function_list))
-
+        else:
+          D.Exception(image)
       except:
         pass
       
